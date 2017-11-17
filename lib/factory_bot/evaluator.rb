@@ -6,6 +6,8 @@ module FactoryBot
   class Evaluator
     class_attribute :attribute_lists
 
+    attr_accessor :instance
+
     private_instance_methods.each do |method|
       undef_method(method) unless method =~ /^__|initialize/
     end
@@ -31,10 +33,6 @@ module FactoryBot
 
       runner = FactoryRunner.new(factory_name, strategy_override, traits_and_overrides)
       @build_strategy.association(runner)
-    end
-
-    def instance=(object_instance)
-      @instance = object_instance
     end
 
     def method_missing(method_name, *args, &block)
